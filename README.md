@@ -1,4 +1,4 @@
-# System tray indicator for Unity
+# System Tray Indicator
 
 ![](https://raw.github.com/AyatanaIndicators/ayatana-indicator-systemtray/master/ayatana-indicator-systemtray.png)
 
