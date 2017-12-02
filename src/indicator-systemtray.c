@@ -78,7 +78,7 @@ struct _IndicatorSystemtrayPrivate {
 #define INDICATOR_SYSTEMTRAY_GET_PRIVATE(o) \
 (G_TYPE_INSTANCE_GET_PRIVATE ((o), INDICATOR_SYSTEMTRAY_TYPE, IndicatorSystemtrayPrivate))
 
-#define SYSTEMTRAY_SCHEMA                       "net.launchpad.indicator.systemtray"
+#define SYSTEMTRAY_SCHEMA                       "org.ayatana.indicator.systemtray"
 #define SYSTEMTRAY_KEY_DISABLE_INDICATOR        "disable-indicator"
 #define SYSTEMTRAY_KEY_IS_FIRST_TIME            "started-the-first-time"
 #define SYSTEMTRAY_KEY_TRAY_IS_STATIC           "tray-is-static"
@@ -97,7 +97,7 @@ struct _IndicatorSystemtrayPrivate {
 #define SYSTEMTRAY_TRAY_TOP                     24
 #define SYSTEMTRAY_TRAY_HEIGHT                  24
 
-#define INDICATOR_ICON_SYSTEMTRAY               "indicator-systemtray-unity"
+#define INDICATOR_ICON_SYSTEMTRAY               "ayatana-indicator-systemtray"
 
 GType indicator_systemtray_get_type(void);
 
