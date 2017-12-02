@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<schemalist gettext-domain="ayatana-indicator-systemtray">
+<schemalist gettext-domain="@GETTEXT_PACKAGE@">
   <schema path="/org/ayatana/indicator/systemtray/" id="org.ayatana.indicator.systemtray">
     <key type="b" name="disable-indicator">
       <default>false</default>
