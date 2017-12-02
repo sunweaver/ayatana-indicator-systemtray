@@ -17,7 +17,8 @@ Vcs-Browser: https://github.com/AyatanaIndicators/ayatana-indicator-systemtray
 Package: ayatana-indicator-systemtray
 Architecture: any
 Depends: ${misc:Depends},
-	${shlibs:Depends}
+         ${shlibs:Depends},
+         glib2.0-bin,
 Description: Ayatana Indicator providing System Tray functionality
  Ayatan Indicator Systemtray is an indicator for panels that don't
  provide a classic Xembed-based system tray and notification area
