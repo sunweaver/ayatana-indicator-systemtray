@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: indicator-systemtray-unity 0.2.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-06-03 11:42+0500\n"
+"POT-Creation-Date: 2017-12-02 20:22+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,36 +17,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: indicator-systemtray.c:223
+#: ../src/indicator-systemtray.c:221
 msgid "Settings"
 msgstr "Einstellungen"
 
-#: indicator-systemtray.c:228
+#. ---
+#: ../src/indicator-systemtray.c:226
 msgid "Background"
 msgstr "Hintergrund"
 
-#: indicator-systemtray.c:233
+#. ----
+#: ../src/indicator-systemtray.c:231
 msgid "Static"
 msgstr "Statische"
 
-#: indicator-systemtray.c:238 indicator-systemtray.c:257
-#: indicator-systemtray.c:407 indicator-systemtray.c:432
+#. -----
+#: ../src/indicator-systemtray.c:236 ../src/indicator-systemtray.c:255
+#: ../src/indicator-systemtray.c:405 ../src/indicator-systemtray.c:430
 msgid "Color"
 msgstr "Farbe"
 
-#: indicator-systemtray.c:241 indicator-systemtray.c:260
-#: indicator-systemtray.c:416 indicator-systemtray.c:441
+#: ../src/indicator-systemtray.c:239 ../src/indicator-systemtray.c:258
+#: ../src/indicator-systemtray.c:414 ../src/indicator-systemtray.c:439
 msgid "Stroke"
 msgstr "Kontur"
 
-#: indicator-systemtray.c:244 indicator-systemtray.c:263
+#: ../src/indicator-systemtray.c:242 ../src/indicator-systemtray.c:261
 msgid "Show"
 msgstr "Zeigen"
 
-#: indicator-systemtray.c:248 indicator-systemtray.c:267
+#: ../src/indicator-systemtray.c:246 ../src/indicator-systemtray.c:265
 msgid "Reset"
 msgstr "Zurücksetzen"
 
-#: indicator-systemtray.c:252
+#. ----
+#: ../src/indicator-systemtray.c:250
 msgid "Floating"
 msgstr "Schwimmende"

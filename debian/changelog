@@ -1,3 +1,10 @@
+ayatana-indicator-systemtray (0.3.0-0) UNRELEASED; urgency=medium
+
+  * Convert to Ayatana Indicators. Obtained from:
+    https://github.com/GGleb/indicator-systemtray-unity
+
+ -- Mike Gabriel <mike.gabriel@das-netzwerkteam.de>  Sat, 02 Dec 2017 19:34:22 +0100
+
 indicator-systemtray-unity (0.2.1-trusty0) trusty; urgency=medium
 
   * Added background settings.

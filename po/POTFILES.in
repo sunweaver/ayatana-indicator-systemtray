@@ -1,0 +1,8 @@
+data/org.ayatana.indicator.systemtray.gschema.xml.in.in
+src/fixedtip.c
+src/gnome-bg-slideshow.c
+src/indicator-systemtray.c
+src/na-marshal.c
+src/na-tray.c
+src/na-tray-child.c
+src/na-tray-manager.c
