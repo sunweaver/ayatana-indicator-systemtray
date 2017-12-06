@@ -186,123 +186,118 @@ static void indicator_systemtray_init(IndicatorSystemtray *self) {
   self->priv->disable_indicator = g_settings_get_boolean( self->priv->settings, SYSTEMTRAY_KEY_DISABLE_INDICATOR );
   g_signal_connect( self->priv->settings, "changed", G_CALLBACK(setting_changed_cb), self );
 
-  if (g_strcmp0(g_getenv("DESKTOP_SESSION"),"ubuntu") != 0 || self->priv->disable_indicator) {
-    self->priv->disable_indicator = TRUE;
+  self->priv->started_the_first_time = g_settings_get_boolean( self->priv->settings, SYSTEMTRAY_KEY_IS_FIRST_TIME );
+  self->priv->tray_is_static = g_settings_get_boolean( self->priv->settings, SYSTEMTRAY_KEY_TRAY_IS_STATIC );
+
+  self->priv->static_x = g_settings_get_int( self->priv->settings, SYSTEMTRAY_KEY_STATIC_X );
+  self->priv->static_y = g_settings_get_int( self->priv->settings, SYSTEMTRAY_KEY_STATIC_Y );
+
+  if (self->priv->started_the_first_time || (self->priv->static_x <= 0 && self->priv->static_y <= 0)) {
+    GdkScreen* screen = gdk_screen_get_default();
+    gint w_s = gdk_screen_get_width( screen );
+    self->priv->static_x = w_s/2;
+    self->priv->static_y = 0;
+    g_settings_set_boolean (self->priv->settings, SYSTEMTRAY_KEY_IS_FIRST_TIME, FALSE);
+    g_settings_set_int(self->priv->settings, SYSTEMTRAY_KEY_STATIC_X, self->priv->static_x);
+    g_settings_set_int(self->priv->settings, SYSTEMTRAY_KEY_STATIC_Y, self->priv->static_y);
+  }
+
+  self->priv->show_background_static = g_settings_get_boolean(self->priv->settings, SYSTEMTRAY_KEY_STATIC_SHOW_BG);
+  self->priv->bg_static = g_settings_get_string(self->priv->settings, SYSTEMTRAY_KEY_STATIC_BG);
+  self->priv->bg_static_stroke = g_settings_get_string(self->priv->settings, SYSTEMTRAY_KEY_STATIC_BG_STROKE);
+  self->priv->show_background_floating = g_settings_get_boolean(self->priv->settings, SYSTEMTRAY_KEY_FLOATING_SHOW_BG);
+  self->priv->bg_floating = g_settings_get_string(self->priv->settings, SYSTEMTRAY_KEY_FLOATING_BG);
+  self->priv->bg_floating_stroke = g_settings_get_string(self->priv->settings, SYSTEMTRAY_KEY_FLOATING_BG_STROKE);
+
+  self->priv->hide_tray_is_active = FALSE;
+  self->priv->hide_menu_is_active = FALSE;
+
+  self->priv->menu = GTK_MENU( gtk_menu_new() );
+  gtk_widget_set_size_request( GTK_WIDGET(self->priv->menu), 0, 0 );
+  self->priv->settings_item = gtk_menu_item_new_with_label( _("Settings") );
+  gtk_menu_shell_append( GTK_MENU_SHELL(self->priv->menu), self->priv->settings_item );
+  GtkWidget *settings_sub = gtk_menu_new();
+  gtk_menu_item_set_submenu( GTK_MENU_ITEM(self->priv->settings_item), settings_sub );
+//---
+   GtkWidget *background_item = gtk_menu_item_new_with_label( _("Background") );
+   gtk_menu_shell_append( GTK_MENU_SHELL(settings_sub), background_item );
+   GtkWidget *background_sub = gtk_menu_new();
+   gtk_menu_item_set_submenu( GTK_MENU_ITEM(background_item), background_sub );
+//----
+    GtkWidget *static_item = gtk_menu_item_new_with_label( _("Static") );
+    gtk_menu_shell_append( GTK_MENU_SHELL(background_sub), static_item );
+    GtkWidget *static_sub = gtk_menu_new();
+    gtk_menu_item_set_submenu( GTK_MENU_ITEM(static_item), static_sub );
+//-----
+     GtkWidget *static_color_bg_item = gtk_menu_item_new_with_label( _("Color") );
+     gtk_menu_shell_append( GTK_MENU_SHELL(static_sub), static_color_bg_item );
+     g_signal_connect( G_OBJECT(static_color_bg_item), "activate", G_CALLBACK(static_color_bg_item_activate), self );
+     GtkWidget *static_color_bg_stroke_item = gtk_menu_item_new_with_label( _("Stroke") );
+     gtk_menu_shell_append( GTK_MENU_SHELL(static_sub), static_color_bg_stroke_item );
+     g_signal_connect( G_OBJECT(static_color_bg_stroke_item), "activate", G_CALLBACK(static_color_bg_stroke_item_activate), self );
+     self->priv->static_show_item = gtk_check_menu_item_new_with_label( _("Show") );
+     gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(self->priv->static_show_item), self->priv->show_background_static );
+     gtk_menu_shell_append( GTK_MENU_SHELL(static_sub), self->priv->static_show_item );
+     g_signal_connect( G_OBJECT(self->priv->static_show_item), "toggled", G_CALLBACK(static_show_item_toggled), self );
+     GtkWidget *static_color_bg_reset_item = gtk_menu_item_new_with_label( _("Reset") );
+     gtk_menu_shell_append( GTK_MENU_SHELL(static_sub), static_color_bg_reset_item );
+     g_signal_connect( G_OBJECT(static_color_bg_reset_item), "activate", G_CALLBACK(static_color_bg_reset_item_activate), self );
+//----
+    GtkWidget *floating_item = gtk_menu_item_new_with_label( _("Floating") );
+    gtk_menu_shell_append( GTK_MENU_SHELL(background_sub), floating_item );
+    GtkWidget *floating_sub = gtk_menu_new();
+    gtk_menu_item_set_submenu( GTK_MENU_ITEM(floating_item), floating_sub );
+//-----
+     GtkWidget *floating_color_bg_item = gtk_menu_item_new_with_label( _("Color") );
+     gtk_menu_shell_append( GTK_MENU_SHELL(floating_sub), floating_color_bg_item );
+     g_signal_connect( G_OBJECT(floating_color_bg_item), "activate", G_CALLBACK(floating_color_bg_item_activate), self );
+     GtkWidget *floating_color_bg_stroke_item = gtk_menu_item_new_with_label( _("Stroke") );
+     gtk_menu_shell_append( GTK_MENU_SHELL(floating_sub), floating_color_bg_stroke_item );
+     g_signal_connect( G_OBJECT(floating_color_bg_stroke_item), "activate", G_CALLBACK(floating_color_bg_stroke_item_activate), self );
+     self->priv->floating_show_item = gtk_check_menu_item_new_with_label( _("Show") );
+     gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(self->priv->floating_show_item), self->priv->show_background_floating );
+     gtk_menu_shell_append( GTK_MENU_SHELL(floating_sub), self->priv->floating_show_item );
+     g_signal_connect( G_OBJECT(self->priv->floating_show_item), "toggled", G_CALLBACK(floating_show_item_toggled), self );
+     GtkWidget *floating_color_bg_reset_item = gtk_menu_item_new_with_label( _("Reset") );
+     gtk_menu_shell_append( GTK_MENU_SHELL(floating_sub), floating_color_bg_reset_item );
+     g_signal_connect( G_OBJECT(floating_color_bg_reset_item), "activate", G_CALLBACK(floating_color_bg_reset_item_activate), self );
+
+  self->priv->window = gtk_window_new( GTK_WINDOW_TOPLEVEL );
+  gtk_window_set_type_hint( GTK_WINDOW (self->priv->window), GDK_WINDOW_TYPE_HINT_DOCK );
+  gtk_window_set_has_resize_grip( GTK_WINDOW (self->priv->window), FALSE );
+  gtk_window_set_keep_above( GTK_WINDOW (self->priv->window), TRUE );
+  gtk_window_set_skip_pager_hint( GTK_WINDOW (self->priv->window), TRUE );
+  gtk_window_set_skip_taskbar_hint( GTK_WINDOW (self->priv->window), TRUE );
+  gtk_window_set_gravity( GTK_WINDOW(self->priv->window), GDK_GRAVITY_NORTH_EAST );
+  gtk_widget_set_name( self->priv->window, "UnityPanelApplet" );
+  gtk_widget_set_visual( self->priv->window, gdk_screen_get_rgba_visual(gdk_screen_get_default()) );
+  gtk_widget_realize( self->priv->window );
+  gtk_widget_set_app_paintable( self->priv->window, TRUE );
+  gtk_window_set_title( GTK_WINDOW (self->priv->window), "System Tray" );
+  g_signal_connect( self->priv->window, "draw", G_CALLBACK(on_window_expose), self );
+  self->priv->tray = na_tray_new_for_screen( gdk_screen_get_default(), GTK_ORIENTATION_HORIZONTAL,
+							 (NaTrayFilterCallback)filter_tray_cb, self );
+  g_signal_connect( na_tray_get_manager(self->priv->tray), "tray_icon_removed", G_CALLBACK(on_tray_icon_removed), self );
+  GtkWidget *fixed;
+  fixed = gtk_fixed_new ();
+  self->priv->fixed = fixed;
+  gtk_container_add (GTK_CONTAINER (self->priv->window), self->priv->fixed);
+  gtk_widget_show (self->priv->fixed);
+  gtk_fixed_put (GTK_FIXED (self->priv->fixed), GTK_WIDGET(self->priv->tray), 5, 0);
+
+  gtk_widget_show( GTK_WIDGET(self->priv->tray) );
+  gtk_widget_show_all( self->priv->window );
+  gtk_widget_show_all( GTK_WIDGET(self->priv->menu) );
+  if (self->priv->tray_is_static) {
+    gtk_widget_show( self->priv->settings_item );
   }
   else {
-    self->priv->started_the_first_time = g_settings_get_boolean( self->priv->settings, SYSTEMTRAY_KEY_IS_FIRST_TIME );
-    self->priv->tray_is_static = g_settings_get_boolean( self->priv->settings, SYSTEMTRAY_KEY_TRAY_IS_STATIC );
-
-    self->priv->static_x = g_settings_get_int( self->priv->settings, SYSTEMTRAY_KEY_STATIC_X );
-    self->priv->static_y = g_settings_get_int( self->priv->settings, SYSTEMTRAY_KEY_STATIC_Y );
-
-    if (self->priv->started_the_first_time || (self->priv->static_x <= 0 && self->priv->static_y <= 0)) {
-      GdkScreen* screen = gdk_screen_get_default();
-      gint w_s = gdk_screen_get_width( screen );
-      self->priv->static_x = w_s/2;
-      self->priv->static_y = 0;
-      g_settings_set_boolean (self->priv->settings, SYSTEMTRAY_KEY_IS_FIRST_TIME, FALSE);
-      g_settings_set_int(self->priv->settings, SYSTEMTRAY_KEY_STATIC_X, self->priv->static_x);
-      g_settings_set_int(self->priv->settings, SYSTEMTRAY_KEY_STATIC_Y, self->priv->static_y);
-    }
-
-    self->priv->show_background_static = g_settings_get_boolean(self->priv->settings, SYSTEMTRAY_KEY_STATIC_SHOW_BG);
-    self->priv->bg_static = g_settings_get_string(self->priv->settings, SYSTEMTRAY_KEY_STATIC_BG);
-    self->priv->bg_static_stroke = g_settings_get_string(self->priv->settings, SYSTEMTRAY_KEY_STATIC_BG_STROKE);
-    self->priv->show_background_floating = g_settings_get_boolean(self->priv->settings, SYSTEMTRAY_KEY_FLOATING_SHOW_BG);
-    self->priv->bg_floating = g_settings_get_string(self->priv->settings, SYSTEMTRAY_KEY_FLOATING_BG);
-    self->priv->bg_floating_stroke = g_settings_get_string(self->priv->settings, SYSTEMTRAY_KEY_FLOATING_BG_STROKE);
-
-    self->priv->hide_tray_is_active = FALSE;
-    self->priv->hide_menu_is_active = FALSE;
-
-    self->priv->menu = GTK_MENU( gtk_menu_new() );
-    gtk_widget_set_size_request( GTK_WIDGET(self->priv->menu), 0, 0 );
-    self->priv->settings_item = gtk_menu_item_new_with_label( _("Settings") );
-    gtk_menu_shell_append( GTK_MENU_SHELL(self->priv->menu), self->priv->settings_item );
-    GtkWidget *settings_sub = gtk_menu_new();
-    gtk_menu_item_set_submenu( GTK_MENU_ITEM(self->priv->settings_item), settings_sub );
-//---
-     GtkWidget *background_item = gtk_menu_item_new_with_label( _("Background") );
-     gtk_menu_shell_append( GTK_MENU_SHELL(settings_sub), background_item );
-     GtkWidget *background_sub = gtk_menu_new();
-     gtk_menu_item_set_submenu( GTK_MENU_ITEM(background_item), background_sub );
-//----
-      GtkWidget *static_item = gtk_menu_item_new_with_label( _("Static") );
-      gtk_menu_shell_append( GTK_MENU_SHELL(background_sub), static_item );
-      GtkWidget *static_sub = gtk_menu_new();
-      gtk_menu_item_set_submenu( GTK_MENU_ITEM(static_item), static_sub );
-//-----
-       GtkWidget *static_color_bg_item = gtk_menu_item_new_with_label( _("Color") );
-       gtk_menu_shell_append( GTK_MENU_SHELL(static_sub), static_color_bg_item );
-       g_signal_connect( G_OBJECT(static_color_bg_item), "activate", G_CALLBACK(static_color_bg_item_activate), self );
-       GtkWidget *static_color_bg_stroke_item = gtk_menu_item_new_with_label( _("Stroke") );
-       gtk_menu_shell_append( GTK_MENU_SHELL(static_sub), static_color_bg_stroke_item );
-       g_signal_connect( G_OBJECT(static_color_bg_stroke_item), "activate", G_CALLBACK(static_color_bg_stroke_item_activate), self );
-       self->priv->static_show_item = gtk_check_menu_item_new_with_label( _("Show") );
-       gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(self->priv->static_show_item), self->priv->show_background_static );
-       gtk_menu_shell_append( GTK_MENU_SHELL(static_sub), self->priv->static_show_item );
-       g_signal_connect( G_OBJECT(self->priv->static_show_item), "toggled", G_CALLBACK(static_show_item_toggled), self );
-       GtkWidget *static_color_bg_reset_item = gtk_menu_item_new_with_label( _("Reset") );
-       gtk_menu_shell_append( GTK_MENU_SHELL(static_sub), static_color_bg_reset_item );
-       g_signal_connect( G_OBJECT(static_color_bg_reset_item), "activate", G_CALLBACK(static_color_bg_reset_item_activate), self );
-//----
-      GtkWidget *floating_item = gtk_menu_item_new_with_label( _("Floating") );
-      gtk_menu_shell_append( GTK_MENU_SHELL(background_sub), floating_item );
-      GtkWidget *floating_sub = gtk_menu_new();
-      gtk_menu_item_set_submenu( GTK_MENU_ITEM(floating_item), floating_sub );
-//-----
-       GtkWidget *floating_color_bg_item = gtk_menu_item_new_with_label( _("Color") );
-       gtk_menu_shell_append( GTK_MENU_SHELL(floating_sub), floating_color_bg_item );
-       g_signal_connect( G_OBJECT(floating_color_bg_item), "activate", G_CALLBACK(floating_color_bg_item_activate), self );
-       GtkWidget *floating_color_bg_stroke_item = gtk_menu_item_new_with_label( _("Stroke") );
-       gtk_menu_shell_append( GTK_MENU_SHELL(floating_sub), floating_color_bg_stroke_item );
-       g_signal_connect( G_OBJECT(floating_color_bg_stroke_item), "activate", G_CALLBACK(floating_color_bg_stroke_item_activate), self );
-       self->priv->floating_show_item = gtk_check_menu_item_new_with_label( _("Show") );
-       gtk_check_menu_item_set_active( GTK_CHECK_MENU_ITEM(self->priv->floating_show_item), self->priv->show_background_floating );
-       gtk_menu_shell_append( GTK_MENU_SHELL(floating_sub), self->priv->floating_show_item );
-       g_signal_connect( G_OBJECT(self->priv->floating_show_item), "toggled", G_CALLBACK(floating_show_item_toggled), self );
-       GtkWidget *floating_color_bg_reset_item = gtk_menu_item_new_with_label( _("Reset") );
-       gtk_menu_shell_append( GTK_MENU_SHELL(floating_sub), floating_color_bg_reset_item );
-       g_signal_connect( G_OBJECT(floating_color_bg_reset_item), "activate", G_CALLBACK(floating_color_bg_reset_item_activate), self );
-
-    self->priv->window = gtk_window_new( GTK_WINDOW_TOPLEVEL );
-    gtk_window_set_type_hint( GTK_WINDOW (self->priv->window), GDK_WINDOW_TYPE_HINT_DOCK );
-    gtk_window_set_has_resize_grip( GTK_WINDOW (self->priv->window), FALSE );
-    gtk_window_set_keep_above( GTK_WINDOW (self->priv->window), TRUE );
-    gtk_window_set_skip_pager_hint( GTK_WINDOW (self->priv->window), TRUE );
-    gtk_window_set_skip_taskbar_hint( GTK_WINDOW (self->priv->window), TRUE );
-    gtk_window_set_gravity( GTK_WINDOW(self->priv->window), GDK_GRAVITY_NORTH_EAST );
-    gtk_widget_set_name( self->priv->window, "UnityPanelApplet" );
-    gtk_widget_set_visual( self->priv->window, gdk_screen_get_rgba_visual(gdk_screen_get_default()) );
-    gtk_widget_realize( self->priv->window );
-    gtk_widget_set_app_paintable( self->priv->window, TRUE );
-    gtk_window_set_title( GTK_WINDOW (self->priv->window), "System Tray" );
-    g_signal_connect( self->priv->window, "draw", G_CALLBACK(on_window_expose), self );
-    self->priv->tray = na_tray_new_for_screen( gdk_screen_get_default(), GTK_ORIENTATION_HORIZONTAL,
-							 (NaTrayFilterCallback)filter_tray_cb, self );
-    g_signal_connect( na_tray_get_manager(self->priv->tray), "tray_icon_removed", G_CALLBACK(on_tray_icon_removed), self );
-    GtkWidget *fixed;
-    fixed = gtk_fixed_new ();
-    self->priv->fixed = fixed;
-    gtk_container_add (GTK_CONTAINER (self->priv->window), self->priv->fixed);
-    gtk_widget_show (self->priv->fixed);
-    gtk_fixed_put (GTK_FIXED (self->priv->fixed), GTK_WIDGET(self->priv->tray), 5, 0);
-
-    gtk_widget_show( GTK_WIDGET(self->priv->tray) );
-    gtk_widget_show_all( self->priv->window );
-    gtk_widget_show_all( GTK_WIDGET(self->priv->menu) );
-    if (self->priv->tray_is_static) {
-      gtk_widget_show( self->priv->settings_item );
-    }
-    else {
-      gtk_widget_hide( self->priv->settings_item );
-    }
-    gtk_widget_hide( self->priv->window );
-    g_signal_connect( self->priv->menu, "notify::visible", G_CALLBACK(menu_visible_notify_cb), self );
-    gtk_widget_set_size_request( GTK_WIDGET(self->priv->tray), 1, SYSTEMTRAY_TRAY_HEIGHT );
-    gtk_window_resize( GTK_WINDOW(self->priv->window), 1, SYSTEMTRAY_TRAY_HEIGHT );
+    gtk_widget_hide( self->priv->settings_item );
   }
+  gtk_widget_hide( self->priv->window );
+  g_signal_connect( self->priv->menu, "notify::visible", G_CALLBACK(menu_visible_notify_cb), self );
+  gtk_widget_set_size_request( GTK_WIDGET(self->priv->tray), 1, SYSTEMTRAY_TRAY_HEIGHT );
+  gtk_window_resize( GTK_WINDOW(self->priv->window), 1, SYSTEMTRAY_TRAY_HEIGHT );
 }
 
 static void indicator_systemtray_dispose(GObject *object) {
