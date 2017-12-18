@@ -8,50 +8,52 @@ msgstr ""
 "Project-Id-Version: ayatana-indicator-systemtray 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-02 20:22+0100\n"
-"PO-Revision-Date: 2017-12-02 20:22+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2017-12-18 21:56+0000\n"
+"Last-Translator: Viktar Vauchkevich <victorenator@gmail.com>\n"
+"Language-Team: Belarusian <https://hosted.weblate.org/projects/ayatana-"
+"indicators/system-tray-applet/be/>\n"
 "Language: be\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
+"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 2.18\n"
 
 #: ../src/indicator-systemtray.c:221
 msgid "Settings"
-msgstr ""
+msgstr "Налады"
 
 #. ---
 #: ../src/indicator-systemtray.c:226
 msgid "Background"
-msgstr ""
+msgstr "Фон"
 
 #. ----
 #: ../src/indicator-systemtray.c:231
 msgid "Static"
-msgstr ""
+msgstr "Статычны"
 
 #. -----
 #: ../src/indicator-systemtray.c:236 ../src/indicator-systemtray.c:255
 #: ../src/indicator-systemtray.c:405 ../src/indicator-systemtray.c:430
 msgid "Color"
-msgstr ""
+msgstr "Колер"
 
 #: ../src/indicator-systemtray.c:239 ../src/indicator-systemtray.c:258
 #: ../src/indicator-systemtray.c:414 ../src/indicator-systemtray.c:439
 msgid "Stroke"
-msgstr ""
+msgstr "Абвядзенне"
 
 #: ../src/indicator-systemtray.c:242 ../src/indicator-systemtray.c:261
 msgid "Show"
-msgstr ""
+msgstr "Паказаць"
 
 #: ../src/indicator-systemtray.c:246 ../src/indicator-systemtray.c:265
 msgid "Reset"
-msgstr ""
+msgstr "Скінуць"
 
 #. ----
 #: ../src/indicator-systemtray.c:250
 msgid "Floating"
-msgstr ""
+msgstr "Плаваючы"
