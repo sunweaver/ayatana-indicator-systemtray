@@ -8,48 +8,51 @@ msgstr ""
 "Project-Id-Version: ayatana-indicator-systemtray 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-02 20:22+0100\n"
-"PO-Revision-Date: 2017-12-02 20:22+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-01-12 04:06+0000\n"
+"Last-Translator: Louies <louies0623@gmail.com>\n"
+"Language-Team: Chinese (Traditional) <https://hosted.weblate.org/projects/"
+"ayatana-indicators/system-tray-applet/zh_Hant/>\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 3.4-dev\n"
 
 #: ../src/indicator-systemtray.c:221
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #. ---
 #: ../src/indicator-systemtray.c:226
 msgid "Background"
-msgstr ""
+msgstr "背景"
 
 #. ----
 #: ../src/indicator-systemtray.c:231
 msgid "Static"
-msgstr ""
+msgstr "靜態"
 
 #. -----
 #: ../src/indicator-systemtray.c:236 ../src/indicator-systemtray.c:255
 #: ../src/indicator-systemtray.c:405 ../src/indicator-systemtray.c:430
 msgid "Color"
-msgstr ""
+msgstr "顏色"
 
 #: ../src/indicator-systemtray.c:239 ../src/indicator-systemtray.c:258
 #: ../src/indicator-systemtray.c:414 ../src/indicator-systemtray.c:439
 msgid "Stroke"
-msgstr ""
+msgstr "行程"
 
 #: ../src/indicator-systemtray.c:242 ../src/indicator-systemtray.c:261
 msgid "Show"
-msgstr ""
+msgstr "顯示"
 
 #: ../src/indicator-systemtray.c:246 ../src/indicator-systemtray.c:265
 msgid "Reset"
-msgstr ""
+msgstr "重新啟動"
 
 #. ----
 #: ../src/indicator-systemtray.c:250
 msgid "Floating"
-msgstr ""
+msgstr "浮動"
