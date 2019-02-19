@@ -8,34 +8,36 @@ msgstr ""
 "Project-Id-Version: ayatana-indicator-systemtray 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-02 20:22+0100\n"
-"PO-Revision-Date: 2017-12-02 20:22+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2019-02-20 21:17+0000\n"
+"Last-Translator: Murilo Venturoso <muriloventuroso@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) <https://hosted.weblate.org/projects/"
+"ayatana-indicators/system-tray-applet/pt_BR/>\n"
 "Language: pt_BR\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 3.5-dev\n"
 
 #: ../src/indicator-systemtray.c:221
 msgid "Settings"
-msgstr ""
+msgstr "Configurações"
 
 #. ---
 #: ../src/indicator-systemtray.c:226
 msgid "Background"
-msgstr ""
+msgstr "Plano de Fundo"
 
 #. ----
 #: ../src/indicator-systemtray.c:231
 msgid "Static"
-msgstr ""
+msgstr "Estático"
 
 #. -----
 #: ../src/indicator-systemtray.c:236 ../src/indicator-systemtray.c:255
 #: ../src/indicator-systemtray.c:405 ../src/indicator-systemtray.c:430
 msgid "Color"
-msgstr ""
+msgstr "Cor"
 
 #: ../src/indicator-systemtray.c:239 ../src/indicator-systemtray.c:258
 #: ../src/indicator-systemtray.c:414 ../src/indicator-systemtray.c:439
@@ -44,13 +46,13 @@ msgstr ""
 
 #: ../src/indicator-systemtray.c:242 ../src/indicator-systemtray.c:261
 msgid "Show"
-msgstr ""
+msgstr "Exibir"
 
 #: ../src/indicator-systemtray.c:246 ../src/indicator-systemtray.c:265
 msgid "Reset"
-msgstr ""
+msgstr "Restaurar"
 
 #. ----
 #: ../src/indicator-systemtray.c:250
 msgid "Floating"
-msgstr ""
+msgstr "Flutuando"
