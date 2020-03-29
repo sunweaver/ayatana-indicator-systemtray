@@ -8,50 +8,52 @@ msgstr ""
 "Project-Id-Version: ayatana-indicator-systemtray 0.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2017-12-02 20:22+0100\n"
-"PO-Revision-Date: 2017-12-02 20:22+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2020-03-29 14:40+0000\n"
+"Last-Translator: Alexie Brindusescu <alexiedb@yahoo.com>\n"
+"Language-Team: Romanian <https://hosted.weblate.org/projects/"
+"ayatana-indicators/system-tray-applet/ro/>\n"
 "Language: ro\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
+"X-Generator: Weblate 4.0-dev\n"
 
 #: ../src/indicator-systemtray.c:221
 msgid "Settings"
-msgstr ""
+msgstr "Setari"
 
 #. ---
 #: ../src/indicator-systemtray.c:226
 msgid "Background"
-msgstr ""
+msgstr "Fundal"
 
 #. ----
 #: ../src/indicator-systemtray.c:231
 msgid "Static"
-msgstr ""
+msgstr "Static"
 
 #. -----
 #: ../src/indicator-systemtray.c:236 ../src/indicator-systemtray.c:255
 #: ../src/indicator-systemtray.c:405 ../src/indicator-systemtray.c:430
 msgid "Color"
-msgstr ""
+msgstr "Culoare"
 
 #: ../src/indicator-systemtray.c:239 ../src/indicator-systemtray.c:258
 #: ../src/indicator-systemtray.c:414 ../src/indicator-systemtray.c:439
 msgid "Stroke"
-msgstr ""
+msgstr "Contur"
 
 #: ../src/indicator-systemtray.c:242 ../src/indicator-systemtray.c:261
 msgid "Show"
-msgstr ""
+msgstr "Arata"
 
 #: ../src/indicator-systemtray.c:246 ../src/indicator-systemtray.c:265
 msgid "Reset"
-msgstr ""
+msgstr "Reseteaza"
 
 #. ----
 #: ../src/indicator-systemtray.c:250
 msgid "Floating"
-msgstr ""
+msgstr "Plutitor"
